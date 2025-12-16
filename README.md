@@ -86,33 +86,22 @@ bash
 git clone [https://github.com/nicgualberto/file-manager-cli.git](https://github.com/nicgualberto/file-manager-cli.git)
 cd file-manager-cli
 
-````
+## 🧪 Example Usage
 
-### 2️⃣ Run commands
-
-#### 📄 List files
-```bash
-python cli.py listar path/to/directory
-````
-
-#### ➕ Create a file
-
-```bash
-python cli.py criar path/to/directory filename.txt
-```
-
-#### ✏️ Rename a file
-
-```bash
-python cli.py renomear path/to/directory old_name.txt new_name.txt
-```
-
-#### 🗑️ Remove a file
-
-```bash
-python cli.py remover path/to/directory filename.txt
-```
-
+  ```bash
+    $ python cli.py list .
+    Documents
+    example.txt
+    
+    $ python cli.py create . test.txt
+    File "test.txt" created successfully.
+    
+    $ python cli.py rename . test.txt demo.txt
+    "test.txt" renamed to "demo.txt".
+    
+    $ python cli.py remove . demo.txt
+    File "demo.txt" removed successfully.
+  ```
 ---
 
 ## 🛡️ Important Rules
