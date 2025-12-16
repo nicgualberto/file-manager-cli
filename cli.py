@@ -1,55 +1,81 @@
 import argparse
 from pathlib import Path
 from file_manager import (
-    listar_arquivos, 
-    criar_arquivo, 
-    renomear_arquivo, 
-    remover_arquivo
+    list_files,
+    create_file,
+    rename_file,
+    remove_file
 )
 
 
 def main():
-    parse = argparse.ArgumentParser(description='Gerenciador de Arquivos - CLI')
-    
-    subparsers = parse.add_subparsers(dest='comando', required=True)
-    
-    listar = subparsers.add_parser('listar', help='Listar arquivos')
-    listar.add_argument('caminho', type=Path)
-    
-    criar = subparsers.add_parser('criar', help='Criar um novo arquivo')
-    criar.add_argument('caminho', type=Path)
-    criar.add_argument('nome_arquivo')
-    
-    renomear = subparsers.add_parser('renomear', help='Renomear um arquivo')
-    renomear.add_argument('caminho', type=Path)
-    renomear.add_argument('nome_atual')
-    renomear.add_argument('novo_nome')
-    
-    remover = subparsers.add_parser('remover', help='Remover arquivo')
-    remover.add_argument('caminho', type=Path)
-    remover.add_argument('nome_arquivo')
-    
+    parser = argparse.ArgumentParser(
+        description='File Manager - CLI'
+    )
 
-    args = parse.parse_args()
-    
-    if args.comando == 'listar':
-        sucesso, msg = listar_arquivos(args.caminho)
-    
-    elif args.comando == 'criar':
-        sucesso, msg = criar_arquivo(args.caminho, args.nome_arquivo)
-    
-    elif args.comando == 'renomear':
-        sucesso, msg = renomear_arquivo(
-            args.caminho, args.nome_atual, args.novo_nome
+    subparsers = parser.add_subparsers(
+        dest='command',
+        required=True
+    )
+
+    # list command
+    list_cmd = subparsers.add_parser(
+        'list',
+        help='List files and directories'
+    )
+    list_cmd.add_argument('path', type=Path)
+
+    # create command
+    create_cmd = subparsers.add_parser(
+        'create',
+        help='Create a new file'
+    )
+    create_cmd.add_argument('path', type=Path)
+    create_cmd.add_argument('filename')
+
+    # rename command
+    rename_cmd = subparsers.add_parser(
+        'rename',
+        help='Rename a file or directory'
+    )
+    rename_cmd.add_argument('path', type=Path)
+    rename_cmd.add_argument('current_name')
+    rename_cmd.add_argument('new_name')
+
+    # remove command
+    remove_cmd = subparsers.add_parser(
+        'remove',
+        help='Remove a file or empty directory'
+    )
+    remove_cmd.add_argument('path', type=Path)
+    remove_cmd.add_argument('filename')
+
+    args = parser.parse_args()
+
+    if args.command == 'list':
+        success, message = list_files(args.path)
+
+    elif args.command == 'create':
+        success, message = create_file(
+            args.path,
+            args.filename
         )
 
-    
-    elif args.comando == 'remover':
-        sucesso, msg = remover_arquivo(args.caminho, args.nome_arquivo)
-        
-    
-    print(msg)
-    
+    elif args.command == 'rename':
+        success, message = rename_file(
+            args.path,
+            args.current_name,
+            args.new_name
+        )
 
-if __name__== '__main__':
+    elif args.command == 'remove':
+        success, message = remove_file(
+            args.path,
+            args.filename
+        )
+
+    print(message)
+
+
+if __name__ == '__main__':
     main()
