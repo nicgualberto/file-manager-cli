@@ -1,128 +1,128 @@
 from pathlib import Path
 
 
-def listar_arquivos(caminho: Path):
-    """_summary_
+def list_files(path: Path):
+    """
+    List files and directories inside a given directory.
 
     Args:
-        caminho (Path): caminho do arquivo
+        path (Path): Directory path
 
     Returns:
-        (bool or dict, str): Sucesso da operação e mensagem descritiva.
+        (bool, list | str): Operation success and list of items or error message
     """
-    if not caminho.exists():
-        return False, 'O caminho não existe.'
-    if not caminho.is_dir():
-        return False, 'O caminho não é um diretório.'
-    item = list(caminho.iterdir())
-    if not item:
-        return True, item
-    else:
-        return True, item 
-      
+    if not path.exists():
+        return False, 'The provided path does not exist.'
 
-def criar_arquivo(caminho: Path, nome_arquivo: str):
-    """_summary_
+    if not path.is_dir():
+        return False, 'The provided path is not a directory.'
+
+    items = list(path.iterdir())
+    return True, items
+
+
+def create_file(path: Path, filename: str):
+    """
+    Create a new file in the given directory.
 
     Args:
-        caminho (Path): caminho do arquivo
-        nome_arquivo (str): nome do arquivo
+        path (Path): Directory path
+        filename (str): File name
 
     Returns:
-        (bool , str): Sucesso da operação e mensagem descritiva.
+        (bool, str): Operation success and descriptive message
     """
-    if not nome_arquivo.strip():
-        return False, 'Nome do arquivo inválido.'
-    
-    if not caminho.exists():
-        return False, 'O caminho informado não existe.'
+    if not filename.strip():
+        return False, 'Invalid file name.'
 
-    arquivo = caminho / nome_arquivo
-    
-    if arquivo.exists():
-        return False, 'O arquivo já existe.'
-    
+    if not path.exists():
+        return False, 'The provided path does not exist.'
+
+    file_path = path / filename
+
+    if file_path.exists():
+        return False, 'The file already exists.'
+
     try:
-        arquivo.touch()
-        return True, f'Arquivo "{arquivo.name}" criado com sucesso.'
+        file_path.touch()
+        return True, f'File "{file_path.name}" created successfully.'
     except PermissionError:
-        return False, 'Permissão negada ao criar o arquivo.'
+        return False, 'Permission denied while creating the file.'
     except OSError:
-        return False, 'Erro do sistema ao criar o arquivo.'
-    
-    
+        return False, 'System error occurred while creating the file.'
 
-def renomear_arquivo(caminho: Path, nome_atual: str, novo_nome: str):
-    """_summary_
+
+def rename_file(path: Path, current_name: str, new_name: str):
+    """
+    Rename a file or directory.
 
     Args:
-        caminho (Path): caminho do arquivo
-        nome_arquivo (str): nome do arquivo
+        path (Path): Directory path
+        current_name (str): Current file or directory name
+        new_name (str): New name
 
     Returns:
-        (bool , str): Sucesso da operação e mensagem descritiva.
+        (bool, str): Operation success and descriptive message
     """
-    if not caminho.exists():
-        return False, 'O caminho selecionado não existe!'
-    arquivo_a = caminho / nome_atual
-    if not arquivo_a.exists():
-        return False, 'O arquivo selecionado não existe.'
-    arquivo_n = caminho / novo_nome
-    if arquivo_n.exists():
-        return False, 'O novo nome do arquivo já existe em outro. Digite um nome diferente!'
+    if not path.exists():
+        return False, 'The provided path does not exist.'
+
+    source = path / current_name
+
+    if not source.exists():
+        return False, 'The selected file or directory does not exist.'
+
+    destination = path / new_name
+
+    if destination.exists():
+        return False, 'A file or directory with the new name already exists.'
+
     try:
-        arquivo_a.rename(arquivo_n)
-        return True, f'Nome antigo -> "{nome_atual}" / Novo nome -> "{novo_nome}".'
-    except Exception as e:
-        return False, f'Não foi possível alterar o nome do arquivo!'
-    if arquivo_a.is_dir():
-        try:
-            arquivo_a.rename(arquivo_n)
-            return True, f'Nome antigo do diretóprio -> "{nome_atual}" / Novo nome do diretório -> "{novo_nome}".'
-        except Exception as e:
-            return False, f'Não foi possível alterar o nome do diretório!'
-        
-def remover_arquivo(caminho: Path, nome_arquivo: str):
-    """_summary_
+        source.rename(destination)
+        return True, f'"{current_name}" renamed to "{new_name}".'
+    except PermissionError:
+        return False, 'Permission denied while renaming.'
+    except OSError:
+        return False, 'System error occurred while renaming.'
+
+
+def remove_file(path: Path, filename: str):
+    """
+    Remove a file or an empty directory.
 
     Args:
-        caminho (Path): Caminho do arquivo
-        nome_arquivo (str): Nome do arquivo
+        path (Path): Directory path
+        filename (str): File or directory name
 
     Returns:
-         (bool, str): Sucesso da operação e mensagem descritiva.
+        (bool, str): Operation success and descriptive message
     """
-    if not caminho.exists():
-        return False, 'O diretório escolhido não existe.'
-    
-    arquivo = caminho / nome_arquivo
-    
-    if not arquivo.exists():
-        return False, 'O arquivo selecionado não existe.'
-    
-    if arquivo.is_file():
+    if not path.exists():
+        return False, 'The provided path does not exist.'
+
+    target = path / filename
+
+    if not target.exists():
+        return False, 'The selected file or directory does not exist.'
+
+    if target.is_file():
         try:
-            arquivo.unlink()
-            return True, f'Arquivo "{arquivo.name}" foi removido com sucesso!'
-        except Exception as e:
-            return False, f'Erro ao remover o arquivo. Tente novamente.'
-    
-    if arquivo.is_dir():
-        item = list(arquivo.iterdir())
-        if not item:
-            try:
-                arquivo.rmdir()
-                return True,  f'O diretório "{arquivo.name}" está vazio e foi removido.'
-            except Exception as e:
-                return False, f'Não foi possível deletar o diretório. Tente novamente!'
-        else:
-            return False, f'O diretório "{arquivo.name}" contém itens.'
-        
-  
+            target.unlink()
+            return True, f'File "{target.name}" removed successfully.'
+        except PermissionError:
+            return False, 'Permission denied while removing the file.'
+        except OSError:
+            return False, 'System error occurred while removing the file.'
 
-    
+    if target.is_dir():
+        items = list(target.iterdir())
+        if items:
+            return False, f'Directory "{target.name}" is not empty.'
 
-
-
-
-
+        try:
+            target.rmdir()
+            return True, f'Directory "{target.name}" removed successfully.'
+        except PermissionError:
+            return False, 'Permission denied while removing the directory.'
+        except OSError:
+            return False, 'System error occurred while removing the directory.'
