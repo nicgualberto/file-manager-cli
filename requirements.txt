@@ -1,0 +1,5 @@
+# Project: File Manager CLI
+# Language: Python 3.10+
+# Note: This project only uses libraries from the standard library
+
+# No external dependencies required.
