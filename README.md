@@ -37,12 +37,6 @@ file-manager-cli/
 ├── cli.py               # Command-line interface
 ├── requirements.txt     # Project dependencies
 └── README.md            # Documentation
-```text
-file-manager-cli/
-├── file_manager.py      # Core logic (business rules)
-├── cli.py               # Command-line interface
-├── requirements.txt     # Project dependencies
-└── README.md            # Documentation
 ````
 
 ---
@@ -89,17 +83,17 @@ cd file-manager-cli
 ## 🧪 Example Usage
 
   ```bash
-    $ python cli.py list .
+    python cli.py list .
     Documents
     example.txt
     
-    $ python cli.py create . test.txt
+    python cli.py create . test.txt
     File "test.txt" created successfully.
     
-    $ python cli.py rename . test.txt demo.txt
+    python cli.py rename . test.txt demo.txt
     "test.txt" renamed to "demo.txt".
     
-    $ python cli.py remove . demo.txt
+    python cli.py remove . demo.txt
     File "demo.txt" removed successfully.
   ```
 ---
