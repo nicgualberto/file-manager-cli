@@ -80,7 +80,6 @@ python cli.py remove path/to/directory filename_or_directory
 ```bash
 python cli.py create_dir path/to/directory dirname
 ````
-bash
 git clone [https://github.com/nicgualberto/file-manager-cli.git](https://github.com/nicgualberto/file-manager-cli.git)
 cd file-manager-cli
 
