@@ -75,7 +75,11 @@ python cli.py rename path/to/directory old_name.txt new_name.txt
 ```bash
 python cli.py remove path/to/directory filename_or_directory
 ```
+#### ➕📁 Create a directory
 
+```bash
+python cli.py create_dir path/to/directory dirname
+````
 bash
 git clone [https://github.com/nicgualberto/file-manager-cli.git](https://github.com/nicgualberto/file-manager-cli.git)
 cd file-manager-cli
