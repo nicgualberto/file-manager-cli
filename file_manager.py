@@ -126,3 +126,34 @@ def remove_file(path: Path, filename: str):
             return False, 'Permission denied while removing the directory.'
         except OSError:
             return False, 'System error occurred while removing the directory.'
+
+
+def create_directory(path: Path, dirname: str):
+    """
+    Create a new directory in the given path
+
+    Args:
+        path (Path): Directory path
+        direname (str): Directory name
+
+    Returns:
+        (bool, str): Operation success and descriptive message
+    """
+    if not dirname.strip():
+        return False, 'Invalid directory name.'
+    
+    if not path.exists():
+        return False, 'The provide directory path does not exist.'
+    
+    mikdir_path = path / dirname
+    
+    if mikdir_path.exists():
+        return False, 'This dicretory alredy exits.'
+    
+    try:
+        mikdir_path.mkdir(parents=True)
+        return True, f'The directory "{mikdir_path.name}" was created.'
+    except PermissionError:
+        return False, 'Permission denied while creating the directory.'
+    except OSError:
+        return False, 'System error ocurred while creating the directory.'
