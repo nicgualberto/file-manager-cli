@@ -98,6 +98,9 @@ cd file-manager-cli
     
     python cli.py remove . demo.txt
     File "demo.txt" removed successfully.
+
+    python cli.py create_dir . main
+    The directory "main" was created.
   ```
 ---
 
